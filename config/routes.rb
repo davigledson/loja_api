@@ -14,3 +14,27 @@ Rails.application.routes.draw do
     get "test", to: "test#index"
   end
 end
+
+Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :clientes
+    end
+  end
+
+  Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :produtos
+    end
+  end
+end
+Rails.application.routes.draw do
+namespace :api do
+  namespace :v1 do
+    resources :categorias
+  end
+end
+end
+
+end

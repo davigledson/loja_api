@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  descricao: MyText
+  preco: 9.99
+  estoque: 1
+  destaque: false
+  ativo: false
+  categoria: one
+
+two:
+  nome: MyString
+  descricao: MyText
+  preco: 9.99
+  estoque: 1
+  destaque: false
+  ativo: false
+  categoria: two
