@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_29_011342) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_27_042042) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_29_011342) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "carrinhos", force: :cascade do |t|
+    t.bigint "usuario_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["usuario_id"], name: "index_carrinhos_on_usuario_id"
+  end
+
   create_table "categoria", force: :cascade do |t|
     t.string "nome"
     t.datetime "created_at", null: false
@@ -54,6 +61,71 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_29_011342) do
     t.string "telefone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "enderecos", force: :cascade do |t|
+    t.bigint "usuario_id", null: false
+    t.string "cep"
+    t.string "rua"
+    t.string "numero"
+    t.string "complemento"
+    t.string "cidade"
+    t.string "estado"
+    t.boolean "principal", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["usuario_id"], name: "index_enderecos_on_usuario_id"
+  end
+
+  create_table "favoritos", force: :cascade do |t|
+    t.bigint "usuario_id", null: false
+    t.bigint "produto_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["produto_id"], name: "index_favoritos_on_produto_id"
+    t.index ["usuario_id"], name: "index_favoritos_on_usuario_id"
+  end
+
+  create_table "imagens_produtos", force: :cascade do |t|
+    t.bigint "produto_id", null: false
+    t.string "url_imagem"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["produto_id"], name: "index_imagens_produtos_on_produto_id"
+  end
+
+  create_table "itens_carrinho", force: :cascade do |t|
+    t.bigint "carrinho_id", null: false
+    t.bigint "produto_id", null: false
+    t.integer "quantidade", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["carrinho_id"], name: "index_itens_carrinho_on_carrinho_id"
+    t.index ["produto_id"], name: "index_itens_carrinho_on_produto_id"
+  end
+
+  create_table "itens_pedido", force: :cascade do |t|
+    t.bigint "pedido_id", null: false
+    t.bigint "produto_id", null: false
+    t.integer "quantidade", default: 1
+    t.decimal "preco", precision: 10, scale: 2
+    t.decimal "desconto", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pedido_id"], name: "index_itens_pedido_on_pedido_id"
+    t.index ["produto_id"], name: "index_itens_pedido_on_produto_id"
+  end
+
+  create_table "pedidos", force: :cascade do |t|
+    t.bigint "usuario_id", null: false
+    t.bigint "endereco_id", null: false
+    t.string "status", default: "pendente"
+    t.string "metodo_pagamento"
+    t.decimal "total", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["endereco_id"], name: "index_pedidos_on_endereco_id"
+    t.index ["usuario_id"], name: "index_pedidos_on_usuario_id"
   end
 
   create_table "produtos", force: :cascade do |t|
@@ -69,7 +141,28 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_29_011342) do
     t.index ["categoria_id"], name: "index_produtos_on_categoria_id"
   end
 
+  create_table "usuarios", force: :cascade do |t|
+    t.string "nome"
+    t.string "email", null: false
+    t.string "senha_digest"
+    t.string "papel", default: "cliente"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_usuarios_on_email", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "carrinhos", "usuarios"
+  add_foreign_key "enderecos", "usuarios"
+  add_foreign_key "favoritos", "produtos"
+  add_foreign_key "favoritos", "usuarios"
+  add_foreign_key "imagens_produtos", "produtos"
+  add_foreign_key "itens_carrinho", "carrinhos"
+  add_foreign_key "itens_carrinho", "produtos"
+  add_foreign_key "itens_pedido", "pedidos"
+  add_foreign_key "itens_pedido", "produtos"
+  add_foreign_key "pedidos", "enderecos"
+  add_foreign_key "pedidos", "usuarios"
   add_foreign_key "produtos", "categoria", column: "categoria_id"
 end

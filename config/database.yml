@@ -2,7 +2,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   username: postgres
-  password: root  # a senha que você usou na instalação
+  password: root  # a senha que você usei na instalação
   host: localhost
   port: 5432
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
