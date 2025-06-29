@@ -46,7 +46,7 @@ class Api::V1::CategoriasController < ApplicationController
   end
 
   def categoria_params
-      params.require(:categoria).permit(:nome) # ajuste os campos conforme seu model
+      params.require(:categoria).permit(:nome,:descricao) # ajuste os campos conforme seu model
 
     #params.require(:categoria).permit(:nome, :descricao) # ajuste os campos conforme seu model
   end

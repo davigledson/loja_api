@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  devise_for :usuarios, path: 'api/v1/auth', controllers: {
+    registrations: 'api/v1/auth/registrations',
+    sessions: 'api/v1/auth/sessions'
+  }
+
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :api do
-    get "test", to: "test#index"
-
     namespace :v1 do
       resources :clientes
       resources :usuarios
