@@ -34,6 +34,7 @@ gem 'dotenv-rails'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
+gem 'active_model_serializers'
 
 gem 'devise'
 gem 'devise-jwt'
