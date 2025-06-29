@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_27_042042) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_28_165348) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,6 +53,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_042042) do
     t.string "nome"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "descricao"
   end
 
   create_table "clientes", force: :cascade do |t|
@@ -116,6 +117,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_042042) do
     t.index ["produto_id"], name: "index_itens_pedido_on_produto_id"
   end
 
+  create_table "jwt_denylists", force: :cascade do |t|
+    t.string "jti"
+    t.datetime "exp"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_jwt_denylists_on_jti"
+  end
+
   create_table "pedidos", force: :cascade do |t|
     t.bigint "usuario_id", null: false
     t.bigint "endereco_id", null: false
@@ -148,6 +157,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_27_042042) do
     t.string "papel", default: "cliente"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.index ["email"], name: "index_usuarios_on_email", unique: true
   end
 
