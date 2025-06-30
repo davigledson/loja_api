@@ -4,7 +4,9 @@ module Api
     class UsuariosController < ApplicationController
       before_action :authenticate_usuario! # Garante que o usuário esteja logado
       before_action :set_usuario, only: [:show, :update] # set_usuario para show, update, destroy
-
+      def index
+        render json: Usuario.all
+      end
       # GET /api/v1/usuarios/:id
       def show
         # Garante que o usuário só pode ver seu próprio perfil

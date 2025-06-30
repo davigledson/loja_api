@@ -17,6 +17,13 @@ Rails.application.routes.draw do
         collection do
           # Rota para listar pedidos de um usuário específico
           get 'usuario/:usuario_id', to: 'pedidos#index_by_user'
+          # NOVAS ROTAS PARA O DASHBOARD
+          get 'contar', to: 'pedidos#contar_pedidos'
+          get 'contar_por_status', to: 'pedidos#contar_pedidos_por_status'
+          get 'faturamento_total', to: 'pedidos#faturamento_total'
+          get 'faturamento_mes_atual', to: 'pedidos#faturamento_mes_atual'
+          get 'produtos_mais_vendidos', to: 'pedidos#produtos_mais_vendidos'
+          get 'vendas_recentes', to: 'pedidos#vendas_recentes'
         end
         # Se você tiver outras ações personalizadas para pedidos, adicione aqui
       end
