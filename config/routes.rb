@@ -13,8 +13,21 @@ Rails.application.routes.draw do
       resources :usuarios
       resources :produtos
       resources :categorias
-      resources :pedidos
+      resources :pedidos do
+        collection do
+          # Rota para listar pedidos de um usuário específico
+          get 'usuario/:usuario_id', to: 'pedidos#index_by_user'
+        end
+        # Se você tiver outras ações personalizadas para pedidos, adicione aqui
+      end
+      resources :favoritos do 
+        collection do
+          # Rota para listar favoritos de um usuário específico
+          # GET /api/v1/favoritos/usuario/:usuario_id
+          get 'usuario/:usuario_id', to: 'favoritos#index_by_user'
+        end
      
+      end
       resources :enderecos do
         collection do
           # Rota para listar endereços de um usuário específico

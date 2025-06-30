@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_28_165348) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_29_223913) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -127,13 +127,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_28_165348) do
 
   create_table "pedidos", force: :cascade do |t|
     t.bigint "usuario_id", null: false
-    t.bigint "endereco_id", null: false
+    t.bigint "endereco_entrega_id", null: false
     t.string "status", default: "pendente"
     t.string "metodo_pagamento"
     t.decimal "total", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["endereco_id"], name: "index_pedidos_on_endereco_id"
+    t.index ["endereco_entrega_id"], name: "index_pedidos_on_endereco_entrega_id"
     t.index ["usuario_id"], name: "index_pedidos_on_usuario_id"
   end
 
@@ -175,7 +175,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_28_165348) do
   add_foreign_key "itens_carrinho", "produtos"
   add_foreign_key "itens_pedido", "pedidos"
   add_foreign_key "itens_pedido", "produtos"
-  add_foreign_key "pedidos", "enderecos"
+  add_foreign_key "pedidos", "enderecos", column: "endereco_entrega_id"
   add_foreign_key "pedidos", "usuarios"
   add_foreign_key "produtos", "categoria", column: "categoria_id"
 end
